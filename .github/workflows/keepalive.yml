@@ -1,0 +1,18 @@
+# Supabase 무료 프로젝트가 1주일 미활동으로 멈추지 않게 하루 한 번 통계 함수를 호출한다.
+# SUPABASE_FN / SUPABASE_ANON 은 index.html에 있는 값과 같다 (공개용).
+name: keepalive
+on:
+  schedule:
+    - cron: '17 3 * * *'   # 매일 12:17 KST
+  workflow_dispatch:
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: call get-stats
+        run: |
+          FN=$(grep -o 'const SUPABASE_FN = "[^"]*"' index.html | cut -d'"' -f2)
+          KEY=$(grep -o 'const SUPABASE_ANON = "[^"]*"' index.html | cut -d'"' -f2)
+          if [ -z "$FN" ]; then echo "SUPABASE_FN not set"; exit 0; fi
+          curl -s -X POST "$FN/get-stats" -H "content-type: application/json" -H "apikey: $KEY" -H "authorization: Bearer $KEY" -H "origin: https://gimgorae.github.io" -d '{"code":"MOXR"}' | head -c 300

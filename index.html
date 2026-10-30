@@ -524,10 +524,12 @@ function result(){
 }
 // ===== 공유 =====
 const SUPABASE_FN = ""; // 예: https://xxxx.supabase.co/functions/v1 — 비우면 저장하지 않음
+const SUPABASE_ANON = ""; // Project Settings → API → anon public 키 (공개용)
 let SAVED_TOKEN = null;
 async function api(path, body){
   if(!SUPABASE_FN) return null;
-  try{ const r=await fetch(SUPABASE_FN+path,{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(body)}); return await r.json(); }catch(e){ return null; }
+  try{ const h={"content-type":"application/json"}; if(SUPABASE_ANON){h.apikey=SUPABASE_ANON;h.authorization="Bearer "+SUPABASE_ANON;}
+    const r=await fetch(SUPABASE_FN+path,{method:"POST",headers:h,body:JSON.stringify(body)}); return await r.json(); }catch(e){ return null; }
 }
 async function saveResponse(answers){
   const j=await api("/save-response",{answers, source:new URLSearchParams(location.search).get("utm_source")||document.referrer||"", shared_from:new URLSearchParams(location.search).get("t")||null, ua_mobile:/Mobi|Android|iPhone/.test(navigator.userAgent)});
