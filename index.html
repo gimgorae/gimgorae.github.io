@@ -523,8 +523,8 @@ function result(){
   app.querySelectorAll('.fb .opt').forEach(b=>b.onclick=()=>{app.querySelectorAll('.fb .opt').forEach(x=>x.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed','true');saveFeedback(+b.textContent)});
 }
 // ===== 공유 =====
-const SUPABASE_FN = ""; // 예: https://xxxx.supabase.co/functions/v1 — 비우면 저장하지 않음
-const SUPABASE_ANON = ""; // Project Settings → API → anon public 키 (공개용)
+const SUPABASE_FN = "https://lamfznmmkzdhchstqhhn.supabase.co/functions/v1"; // 예: https://xxxx.supabase.co/functions/v1 — 비우면 저장하지 않음
+const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxhbWZ6bm1ta3pkaGNoc3RxaGhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMzMDA3MjUsImV4cCI6MjEwODg3NjcyNX0.jzGddEbWB5pYFf89Zrl_iKj4axbqGQfthSTFVvwxOWo"; // Project Settings → API → anon public 키 (공개용)
 let SAVED_TOKEN = null;
 async function api(path, body){
   if(!SUPABASE_FN) return null;
