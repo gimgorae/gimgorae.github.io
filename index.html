@@ -584,7 +584,7 @@ async function shareTo(kind){
       try{
         if(!Kakao.isInitialized()) Kakao.init(KAKAO_KEY);
         Kakao.Share.sendDefault({objectType:'feed',
-          content:{title:`나는 ${nm}입니다`, description:(HOOK[RESULT_CODE]||[])[0]||'', imageUrl:new URL('og.png',location.href).toString(), link:{mobileWebUrl:url, webUrl:url}},
+          content:{title:`나는 ${nm}입니다`, description:(HOOK[RESULT_CODE]||[])[0]||'', imageUrl:`https://gimgorae.github.io/share/${RESULT_CODE}.png`, imageWidth:800, imageHeight:400, link:{mobileWebUrl:url, webUrl:url}},
           buttons:[{title:'나도 진단하기', link:{mobileWebUrl:url, webUrl:url}}]});
         return;
       }catch(e){}
